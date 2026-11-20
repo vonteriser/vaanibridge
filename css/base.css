@@ -119,21 +119,26 @@ video {
   transform: none;
 }
 
-/* Custom scrollbars */
+/* Slim, softly rounded scrollbars */
 * {
   scrollbar-width: thin;
   scrollbar-color: var(--border-focus) transparent;
 }
 
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  width: 5px;
+  height: 5px;
 }
 
 ::-webkit-scrollbar-thumb {
   background: var(--border-focus);
-  border-radius: 10px;
-  border: 2px solid var(--bg-canvas);
+  border-radius: 999px;
+  border: 1px solid var(--bg-canvas);
+  transition: background 180ms ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-primary);
 }
 
 ::-webkit-scrollbar-track {
