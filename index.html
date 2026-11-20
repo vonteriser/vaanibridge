@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VaaniBridge — Bridging speech and understanding in real-time conversation</title>
+    <meta
+      name="description"
+      content="VaaniBridge helps people whose speech is hard for others to understand communicate clearly face-to-face, with a listener-facing display and spoken voice output."
+    />
+    <meta name="theme-color" content="#090A0D" />
+
+    <!-- Optional web fonts. The CSS font stacks fall back to system fonts if these are unavailable. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Design system, in dependency order -->
+    <link rel="stylesheet" href="./css/tokens.css" />
+    <link rel="stylesheet" href="./css/base.css" />
+    <link rel="stylesheet" href="./css/layout.css" />
+    <link rel="stylesheet" href="./css/components.css" />
+    <link rel="stylesheet" href="./css/pages.css" />
+    <link rel="stylesheet" href="./css/animations.css" />
+  </head>
+
+  <body class="is-booting">
+    <a class="skip-link" href="#page-stage">Skip to content</a>
+
+    <!-- Active page stage: the router injects one page at a time into this element -->
+    <main id="page-stage" tabindex="-1"></main>
+
+    <!--
+      Bottom-up secondary navigation (Pages 2–6 only).
+      It starts below the viewport edge and is "pulled up" by the swarm.
+    -->
+    <nav id="secondary-nav" class="secondary-nav" aria-label="Site navigation">
+      <button class="nav-brand" type="button" data-nav-home aria-label="VaaniBridge — return to home">
+        <svg class="nav-brand-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 17h18" />
+          <path d="M5 17c0-5 3-9 7-9s7 4 7 9" />
+          <path d="M8 17v-3M12 17v-9M16 17v-3" />
+        </svg>
+        <span class="nav-brand-word">VaaniBridge</span>
+      </button>
+
+      <ul class="nav-links">
+        <li><button type="button" data-nav-page="pipeline"><span class="nav-index">01</span> How It Works</button></li>
+        <li><button type="button" data-nav-page="wearable"><span class="nav-index">02</span> Wearable 3D</button></li>
+        <li><button type="button" data-nav-page="scenarios"><span class="nav-index">03</span> Scenarios</button></li>
+        <li><button type="button" data-nav-page="demo"><span class="nav-index">04</span> Demo</button></li>
+        <li><button type="button" data-nav-page="team"><span class="nav-index">05</span> Team</button></li>
+      </ul>
+
+      <div class="nav-telemetry" aria-live="off">
+        <i class="dot dot-pulse"></i>
+        <span id="swarm-count">-- BUILDERS</span>
+      </div>
+    </nav>
+
+    <!-- Swarm canvas: never intercepts pointer input (pointer-events: none in components.css) -->
+    <canvas id="swarm-canvas" aria-hidden="true"></canvas>
+
+    <noscript>
+      <p style="position: fixed; inset: 0; display: grid; place-items: center; color: #9ba3b2; font-family: sans-serif">
+        VaaniBridge needs JavaScript enabled to render this site.
+      </p>
+    </noscript>
+
+    <script type="module" src="./js/main.js"></script>
+  </body>
+</html>

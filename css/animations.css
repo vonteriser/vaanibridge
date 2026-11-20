@@ -1,0 +1,162 @@
+/* ==========================================================================
+   animations.css — Construction states, keyframes, 3D flip, typewriter caret
+   ========================================================================== */
+
+/* ---------- Build-target construction states ----------
+   Every buildable element carries [data-build-target] and starts hidden.
+   The swarm (or the reduced-motion fallback) adds .is-built to reveal it.
+   Per-element overrides:
+     --build-from        initial transform (default: scale 0.96)
+     --built-transform   final resting transform (default: none)
+*/
+[data-build-target] {
+  opacity: 0;
+  transform: var(--build-from, scale(0.96));
+  transition: opacity 450ms ease, transform 650ms var(--ease-out-expo), border-color 250ms ease,
+    background 250ms ease;
+}
+
+[data-build-target].is-built {
+  opacity: 1;
+  transform: var(--built-transform, none);
+}
+
+/* Typography sweep: text is revealed left-to-right behind the scanline */
+/* The hidden state uses opacity only (a fully clipped element would never intersect the viewport,
+   so the observer could not detect it). The left-to-right reveal is a keyframe animation. */
+[data-build-type="text"] {
+  --build-from: translateY(10px);
+  transition: opacity 120ms ease, transform 700ms var(--ease-out-expo);
+}
+
+[data-build-type="text"].is-built {
+  animation: textSweep var(--sweep-ms, 800ms) linear both;
+}
+
+@keyframes textSweep {
+  from { clip-path: inset(-14% 100% -14% 0); }
+  to { clip-path: inset(-14% -2% -14% -2%); }
+}
+
+/* Slide-in columns (Page 2 side descriptions) */
+[data-build-from="left"] {
+  --build-from: translateX(-48px);
+}
+
+[data-build-from="right"] {
+  --build-from: translateX(48px);
+}
+
+/* After construction finishes, drop to a plain state so hover/layout transforms work */
+@media (prefers-reduced-motion: reduce) {
+  [data-build-target],
+  [data-build-type="text"] {
+    transition: none;
+  }
+
+  [data-build-type="text"].is-built {
+    animation: none;
+  }
+}
+
+/* ---------- Keyframes ---------- */
+@keyframes dotPulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.5); }
+  50% { opacity: 0.55; box-shadow: 0 0 0 5px rgba(59, 130, 246, 0); }
+}
+
+@keyframes speakPulse {
+  0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.55); }
+  100% { box-shadow: 0 0 0 16px rgba(59, 130, 246, 0); }
+}
+
+@keyframes eqBar {
+  0%, 100% { height: 18%; }
+  50% { height: 100%; }
+}
+
+@keyframes caretBlink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+@keyframes arrowDrop {
+  0% { transform: translateY(-4px); opacity: 0.4; }
+  60% { transform: translateY(3px); opacity: 1; }
+  100% { transform: translateY(-4px); opacity: 0.4; }
+}
+
+@keyframes spineFlow {
+  0% { background-position: 0 -96px; }
+  100% { background-position: 0 96px; }
+}
+
+@keyframes waveBar {
+  0%, 100% { transform: scaleY(0.2); }
+  50% { transform: scaleY(1); }
+}
+
+@keyframes silenceFill {
+  0% { width: 0; }
+  75%, 100% { width: 100%; }
+}
+
+@keyframes wireGlow {
+  0%, 100% { box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.25), 0 0 14px rgba(59, 130, 246, 0.12); }
+  50% { box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.5), 0 0 26px rgba(59, 130, 246, 0.24); }
+}
+
+@keyframes orbitSpin {
+  to { transform: rotateZ(360deg); }
+}
+
+@keyframes meterShift {
+  0%, 100% { transform: scaleX(0.55); }
+  50% { transform: scaleX(0.9); }
+}
+
+/* ---------- Typewriter caret (Page 6) ---------- */
+.caret {
+  display: inline-block;
+  width: 0.06em;
+  height: 0.82em;
+  margin-left: 0.04em;
+  background: var(--accent-primary);
+  box-shadow: 0 0 18px var(--accent-primary);
+  vertical-align: baseline;
+  transform: translateY(0.06em);
+  animation: caretBlink 0.9s steps(1) infinite;
+}
+
+/* ---------- 3D scenario card flip (Page 4) ---------- */
+.flip-card {
+  perspective: 1200px;
+}
+
+.flip-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 800ms var(--ease-out-expo);
+}
+
+.flip-card.is-flipped .flip-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-face {
+  position: absolute;
+  inset: 0;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.flip-back {
+  transform: rotateY(180deg);
+}
+
+/* ---------- Wireframe construction glow (static fallback accent) ---------- */
+.wire-glow {
+  animation: wireGlow 3s ease-in-out infinite;
+}

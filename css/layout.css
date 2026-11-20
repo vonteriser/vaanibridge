@@ -1,0 +1,63 @@
+/* ==========================================================================
+   layout.css — Containers, grids and responsive breakpoints
+   Breakpoints:  > 1024px large  |  768–1024px medium  |  < 768px compact
+   ========================================================================== */
+
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--page-gutter);
+}
+
+/* 12-column grid utility for future content */
+.grid-12 {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--space-5);
+}
+
+/* Every page is a full-width section inside the stage */
+.page {
+  position: relative;
+  width: 100%;
+}
+
+/* Pages 2–5 reserve room so content never hides behind the bottom-up nav bar */
+.page-padded {
+  padding: var(--space-7) 0 140px;
+}
+
+.page-header {
+  max-width: 760px;
+  margin: 0 auto var(--space-7);
+  text-align: center;
+}
+
+.page-header h2 {
+  margin-top: var(--space-4);
+}
+
+.page-header p {
+  margin-top: var(--space-4);
+  margin-inline: auto;
+}
+
+/* Medium screens */
+@media (max-width: 1024px) {
+  .page-padded {
+    padding-top: var(--space-6);
+  }
+}
+
+/* Compact screens */
+@media (max-width: 767px) {
+  .page-padded {
+    padding-top: var(--space-5);
+    padding-bottom: 130px;
+  }
+
+  .page-header {
+    margin-bottom: var(--space-6);
+  }
+}
