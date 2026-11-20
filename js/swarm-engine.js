@@ -45,7 +45,7 @@ const TIMELINE = {
 };
 
 /** Physical size of one micro-cursor at 100% zoom (25% of a ~26px pointer). */
-const CURSOR_HEIGHT = 26;
+const CURSOR_HEIGHT = 13;
 
 /** Hollow-core orbit radii around the real pointer (px). */
 const ORBIT_MIN = 49;
